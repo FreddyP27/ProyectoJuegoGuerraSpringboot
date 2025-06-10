@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Listado de Guerreros</title>
+    <link rel="stylesheet" href="/css/stylesLG.css" />
+</head>
+<body>
+
+    <header>
+        <h1>Listado de Guerreros</h1>
+        <!-- Botón de cerrar sesión redirigiendo a /login -->
+        <button class="top-right" onclick="window.location.href='/login'">
+            <img src="/img/cerrar.png" alt="Cerrar Sesión" width="25" />
+        </button>
+    </header>
+    <!-- Formulario de filtro -->
+    <form method="get" action="/listadoGuerrero" class="filter-section" style="text-align:center; margin-bottom:20px;">
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo">
+            <option value="todos" th:selected="${tipoSeleccionado == 'todos'}">Todos</option>
+            <option value="soldado" th:selected="${tipoSeleccionado == 'soldado'}">Soldado</option>
+            <option value="vikingo" th:selected="${tipoSeleccionado == 'vikingo'}">Vikingo</option>
+            <option value="alienigena" th:selected="${tipoSeleccionado == 'alienigena'}">Alienígena</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Tabla de guerreros -->
+    <table border="1" style="margin: 0 auto; width: 80%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: rgba(0, 255, 255, 0.3);">
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Ataque</th>
+                <th>Defensa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="guerrero : ${guerreros}">
+                <td th:text="${guerrero.nombre}">Nombre</td>
+                <td th:text="${guerrero.tipo}">Tipo</td>
+                <td th:text="${guerrero.ataque}">Ataque</td>
+                <td th:text="${guerrero.defensa}">Defensa</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="add-button-container" style="text-align: center; margin-top: 20px;">
+        <!--  <button onclick="window.location.href='/anadirGuerrero'">Añadir Nuevo Guerrero</button>-->
+    	<button onclick="window.location.href='/listadoVehiculo'">Añadir Nuevo Guerrero</button>
+    </div>
+
+</body>
+</html>

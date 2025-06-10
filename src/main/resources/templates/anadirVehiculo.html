@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Naves Espaciales</title>
+    <link rel="stylesheet" href="/css/styles.css" /> <!-- Enlazamos el archivo CSS -->
+</head>
+<body>
+
+
+
+<form id="naveForm" method="post" action="/anadirVehiculo">
+    <h2>Registrar Nave Espacial</h2><br>
+
+    <label>Nombre:</label>
+    <input type="text" id="nombre" name="nombre"><br>
+
+    <label>Tipo:</label>
+    <select id="tipo" name="tipo" required>
+        <option value="Tanque">Tanque</option>
+        <option value="Alienigena">Nave Alienigena</option>
+        <option value="Vikingo">Vikingo</option>
+    </select><br>
+        <label>VidaTipo:</label>
+    <input type="text" id="vida" name="vida" value="1000" readonly><br>
+
+    <label>Ataque:</label>
+    <input type="number" id="ataque" name="ataque" value="0"><br>
+
+    <label>Defensa:</label>
+    <input type="number" id="defensa" name="defensa" value="0"><br>
+
+    <button type="submit">Guardar</button>
+</form>
+
+
+
+</body>
+</html>

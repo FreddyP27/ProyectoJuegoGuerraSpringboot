@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Listado de Vehículos</title>
+    <link rel="stylesheet" href="/css/stylesLV.css" />
+</head>
+<body>
+
+    <!-- Botón Cerrar Sesión arriba a la derecha -->
+    <div style="text-align: right; margin-bottom: 10px;">
+        <form method="get" action="/login">
+            <input type="submit" value="Cerrar Sesión" />
+        </form>
+    </div>
+
+    <h1>LISTADO DE VEHICULOS</h1>
+
+    <br><a href="/listadoGuerrero"> GUERREROS</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Vida</th>
+                <th>Ataque</th>
+                <th>Defensa</th>
+                <th>Num Guerreros</th>
+                <th>Añadir Guerrero</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vehiculo : ${vehiculos}">
+                <td>
+                    <!-- Botón de eliminar -->
+                    <a th:href="@{'/eliminarVehiculo/' + ${vehiculo.id}}" onclick="return confirm('¿Seguro que quieres eliminar este vehículo?')">
+                        <img alt="Eliminar" src="/images/delete.png" width="30" height="30" />
+                    </a>
+                </td>
+                <td th:text="${vehiculo.nombre}">Nombre</td>
+                <td th:text="${vehiculo.tipo}">Tipo</td>
+                <td th:text="${vehiculo.vida}">Vida</td>
+                <td th:text="${vehiculo.ataque}">Ataque</td>
+                <td th:text="${vehiculo.defensa}">Defensa</td>
+
+                <!-- Cantidad de guerreros -->
+                <td th:text="${#lists.size(vehiculo.guerreros)}">0</td>
+
+                <!-- Botón añadir guerrero -->
+                <td>
+                    <button class="boton" th:onclick="'location.href=\'/anadirGuerrero?vehiculoId=' + ${vehiculo.id} + '\''">+</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    
+    <!-- ==================================================================0 -->
+    <form method="get" action="/combate" style="margin-bottom: 20px; text-align: center;">
+	    <label for="vehiculo1Id">Vehículo 1:</label>
+	    <select name="vehiculo1Id" id="vehiculo1Id" required>
+	        <option value="" disabled selected>Selecciona Vehículo 1</option>
+	        <option th:each="vehiculo : ${vehiculos}" 
+	                th:value="${vehiculo.id}" 
+	                th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
+	        </option>
+	    </select>
+	
+	    <label for="vehiculo2Id" style="margin-left: 20px;">Vehículo 2:</label>
+	    <select name="vehiculo2Id" id="vehiculo2Id" required>
+	        <option value="" disabled selected>Selecciona Vehículo 2</option>
+	        <option th:each="vehiculo : ${vehiculos}" 
+	                th:value="${vehiculo.id}" 
+	                th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
+	        </option>
+	    </select>
+	
+	    <button type="submit" style="margin-left: 20px;">Iniciar Combate</button>
+	</form>
+     <!-- ==================================================================0 -->
+
+    <div class="buttons-container">
+        <input type="button" onclick="window.location.href='AnadirVehiculo'" value="Añadir Vehiculo" />
+        <!--  <input type="button" value="Iniciar Combate" /> -->
+    </div>
+    <div style="text-align: center; margin-top: 20px; color: green;" th:if="${resultadoCombate != null}">
+	    <strong>Resultado del combate:</strong> <span th:text="${resultadoCombate}"></span>
+	</div>
+
+</body>
+</html>
