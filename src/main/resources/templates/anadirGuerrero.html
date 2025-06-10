@@ -9,13 +9,11 @@
 
     <header style="text-align: center; margin-bottom: 30px;">
         <h1>Añadir Guerrero</h1>
-        <!-- Botón de cerrar sesión redirigiendo a /login -->
         <button style="position: absolute; top: 10px; right: 10px;" onclick="window.location.href='/login'">
             <img src="/img/cerrar.png" alt="Cerrar Sesión" width="25" />
         </button>
     </header>
 
-    <!-- Mostrar mensajes flash de error o éxito -->
     <div th:if="${error}" style="color: #ff5555; margin-bottom: 15px; text-align: center;">
         <p th:text="${error}"></p>
     </div>
@@ -23,45 +21,34 @@
         <p th:text="${success}"></p>
     </div>
 
-    <form method="POST" action="/guardarGuerrero" th:object="${guerrero}" 
-          style="max-width: 400px; margin: 0 auto; background: rgba(0,0,0,0.8); padding: 30px; border-radius: 12px; color: #0ff; font-family: 'Orbitron', sans-serif;">
+    <form method="POST" action="/guardarGuerrero" th:object="${guerrero}">
+    
+    <input type="hidden" name="vehiculoId" th:value="${vehiculoId}" />
 
-        <label for="nombre">Nombre</label><br />
-        <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required maxlength="30" /><br /><br />
+    <!-- resto de campos normales: nombre, tipo, ataque, defensa -->
 
-        <label for="tipo">Tipo</label><br />
-        <select id="tipo" name="tipo" th:field="*{tipo}" required>
-            <option value="" disabled selected>Selecciona un tipo</option>
-            <option value="soldado" th:selected="${guerrero.tipo == 'soldado'}">Soldado</option>
-            <option value="vikingo" th:selected="${guerrero.tipo == 'vikingo'}">Vikingo</option>
-            <option value="alienigena" th:selected="${guerrero.tipo == 'alienigena'}">Alienígena</option>
-        </select><br /><br />
+    <label for="nombre">Nombre</label><br />
+    <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required maxlength="30" /><br /><br />
 
-        <label for="ataque">Ataque</label><br />
-        <input type="number" id="ataque" name="ataque" th:field="*{ataque}" required min="0" /><br /><br />
+    <label for="tipo">Tipo</label><br />
+    <select id="tipo" name="tipo" th:field="*{tipo}" required>
+        <option value="" disabled selected>Selecciona un tipo</option>
+        <option value="soldado" th:selected="${guerrero.tipo == 'soldado'}">Soldado</option>
+        <option value="vikingo" th:selected="${guerrero.tipo == 'vikingo'}">Vikingo</option>
+        <option value="alienigena" th:selected="${guerrero.tipo == 'alienigena'}">Alienígena</option>
+    </select><br /><br />
 
-        <label for="defensa">Defensa</label><br />
-        <input type="number" id="defensa" name="defensa" th:field="*{defensa}" required min="0" /><br /><br />
+    <label for="ataque">Ataque</label><br />
+    <input type="number" id="ataque" name="ataque" th:field="*{ataque}" required min="0" /><br /><br />
 
-        <label for="vehiculoId">Selecciona Vehículo</label><br />
-        <select id="vehiculoId" name="vehiculoId" required>
-            <option value="" disabled selected>Selecciona un vehículo</option>
-            <option th:each="vehiculo : ${vehiculos}"
-                    th:value="${vehiculo.id}"
-                    th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
-            </option>
-        </select><br /><br />
+    <label for="defensa">Defensa</label><br />
+    <input type="number" id="defensa" name="defensa" th:field="*{defensa}" required min="0" /><br /><br />
 
-        <div style="text-align: center;">
-            <button class="boton" type="submit" style="background-color: #0ff; color: black; padding: 12px 20px; border-radius: 5px; border:none; cursor:pointer;">
-                Guardar
-            </button>
-            <button type="button" class="boton" onclick="window.history.back();" style="background-color: #0ff; color: black; padding: 12px 20px; border-radius: 5px; border:none; cursor:pointer; margin-left: 10px;">
-                Volver
-            </button>
-        </div>
-
-    </form>
+    <div style="text-align: center;">
+        <button type="submit">Guardar</button>
+        <button type="button" onclick="window.history.back();">Volver</button>
+    </div>
+</form>
 
 </body>
 </html>
