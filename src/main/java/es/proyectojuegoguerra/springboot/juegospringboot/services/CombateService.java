@@ -33,12 +33,14 @@ public class CombateService {
         while (vidaV1 > 0 && vidaV2 > 0) {
             if (turnoV1) {
                 // V1 ataca a V2
-                int dano = Math.max(0, ataqueV1 - defensaV2);
+                int random = (int)(Math.random() * 10) + 1;
+                int dano = random + (ataqueV1 - defensaV2);
                 vidaV2 -= dano;
                 System.out.println("Vehiculo 1 ataca y hace " + dano + " de daño. Vida V2: " + vidaV2);
             } else {
                 // V2 ataca a V1
-                int dano = Math.max(0, ataqueV2 - defensaV1);
+                int random = (int)(Math.random() * 10) + 1;
+                int dano = random + (ataqueV2 - defensaV1);
                 vidaV1 -= dano;
                 System.out.println("Vehiculo 2 ataca y hace " + dano + " de daño. Vida V1: " + vidaV1);
             }
