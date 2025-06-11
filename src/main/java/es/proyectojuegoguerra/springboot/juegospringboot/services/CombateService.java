@@ -13,37 +13,59 @@ public class CombateService {
     @Autowired
     private VehiculoRepository vehiculoRepository;
 
+    //private static final Logger logger = LoggerFactory.getLogger(CombateService.class);
+
     public String combate(Long vehiculoId1, Long vehiculoId2) {
+        //logger.info("Iniciando combate entre Vehículo {} y Vehículo {}", vehiculoId1, vehiculoId2);
+
         VehiculoEntity v1 = vehiculoRepository.findById(vehiculoId1)
                 .orElseThrow(() -> new RuntimeException("Vehículo 1 no encontrado"));
         VehiculoEntity v2 = vehiculoRepository.findById(vehiculoId2)
                 .orElseThrow(() -> new RuntimeException("Vehículo 2 no encontrado"));
 
+        // ✅ Validación: ambos vehículos deben tener al menos un guerrero
+        if (v1.getGuerreros() == null || v1.getGuerreros().isEmpty()) {
+            //logger.warn("Vehículo 1 no tiene guerreros. Combate cancelado.");
+        	System.out.println("Vehículo 1 no tiene guerreros. Combate cancelado.");
+            return "El Vehículo 1 no tiene guerreros asignados. No se puede iniciar el combate.";
+        }
+
+        if (v2.getGuerreros() == null || v2.getGuerreros().isEmpty()) {
+            //logger.warn("Vehículo 2 no tiene guerreros. Combate cancelado.");
+        	System.out.println("Vehículo 2 no tiene guerreros. Combate cancelado.");
+            return "El Vehículo 2 no tiene guerreros asignados. No se puede iniciar el combate.";
+        }
+
         int vidaV1 = v1.getVida();
         int vidaV2 = v2.getVida();
- 
+
         int ataqueV1 = v1.getAtaque() + sumaAtaqueGuerreros(v1);
         int defensaV1 = v1.getDefensa() + sumaDefensaGuerreros(v1);
 
         int ataqueV2 = v2.getAtaque() + sumaAtaqueGuerreros(v2);
         int defensaV2 = v2.getDefensa() + sumaDefensaGuerreros(v2);
 
+        //logger.debug("Stats V1: vida={}, ataque={}, defensa={}", vidaV1, ataqueV1, defensaV1);
+        //logger.debug("Stats V2: vida={}, ataque={}, defensa={}", vidaV2, ataqueV2, defensaV2);
+
         boolean turnoV1 = true;
 
         while (vidaV1 > 0 && vidaV2 > 0) {
+            int random = (int)(Math.random() * 10) + 1;
+            int dano;
+
             if (turnoV1) {
-                // V1 ataca a V2
-                int random = (int)(Math.random() * 10) + 1;
-                int dano = random + (ataqueV1 - defensaV2);
+                dano = random + (ataqueV1 - defensaV2);
                 vidaV2 -= dano;
-                System.out.println("Vehiculo 1 ataca y hace " + dano + " de daño. Vida V2: " + vidaV2);
+                //logger.info("V1 ataca con daño={} (random {}, ataque {}, defensa V2 {}). Vida V2: {}",
+                //        dano, random, ataqueV1, defensaV2, Math.max(vidaV2, 0));
             } else {
-                // V2 ataca a V1
-                int random = (int)(Math.random() * 10) + 1;
-                int dano = random + (ataqueV2 - defensaV1);
+                dano = random + (ataqueV2 - defensaV1);
                 vidaV1 -= dano;
-                System.out.println("Vehiculo 2 ataca y hace " + dano + " de daño. Vida V1: " + vidaV1);
+                //logger.info("V2 ataca con daño={} (random {}, ataque {}, defensa V1 {}). Vida V1: {}",
+                //        dano, random, ataqueV2, defensaV1, Math.max(vidaV1, 0));
             }
+
             turnoV1 = !turnoV1;
         }
 
@@ -56,7 +78,8 @@ public class CombateService {
             resultado = "Vehículo 1 gana el combate";
         }
 
-        // Opcional: actualizar la vida restante en base de datos
+        //logger.info("Resultado del combate: {}", resultado);
+
         v1.setVida(Math.max(0, vidaV1));
         v2.setVida(Math.max(0, vidaV2));
         vehiculoRepository.save(v1);
