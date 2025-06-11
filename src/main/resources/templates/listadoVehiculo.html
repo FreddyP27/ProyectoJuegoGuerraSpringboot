@@ -59,7 +59,7 @@
     <br>
     
     <!-- ==================================================================0 -->
-    <form method="get" action="/combate" style="margin-bottom: 20px; text-align: center;">
+    <form method="get" action="/combate" class="form-combate">
 	    <label for="vehiculo1Id">Vehículo 1:</label>
 	    <select name="vehiculo1Id" id="vehiculo1Id" required>
 	        <option value="" disabled selected>Selecciona Vehículo 1</option>
@@ -86,7 +86,7 @@
         <input type="button" onclick="window.location.href='AnadirVehiculo'" value="Añadir Vehiculo" />
         <!--  <input type="button" value="Iniciar Combate" /> -->
     </div>
-    <div style="text-align: center; margin-top: 20px; color: green;" th:if="${resultadoCombate != null}">
+    <div class="resultado-combate" th:if="${resultadoCombate != null}">
 	    <strong>Resultado del combate:</strong> <span th:text="${resultadoCombate}"></span>
 	</div>
 
