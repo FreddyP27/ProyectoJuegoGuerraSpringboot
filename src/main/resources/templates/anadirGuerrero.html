@@ -22,33 +22,46 @@
     </div>
 
     <form method="POST" action="/guardarGuerrero" th:object="${guerrero}">
-    
-    <input type="hidden" name="vehiculoId" th:value="${vehiculoId}" />
 
-    <!-- resto de campos normales: nombre, tipo, ataque, defensa -->
+        <label for="nombre">Nombre</label><br />
+        <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required maxlength="30" /><br /><br />
 
-    <label for="nombre">Nombre</label><br />
-    <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required maxlength="30" /><br /><br />
+        <label for="tipo">Tipo</label><br />
+        <select id="tipo" name="tipo" th:field="*{tipo}" required>
+            <option value="" disabled selected>Selecciona un tipo</option>
+            <option value="soldado" th:selected="${guerrero.tipo == 'soldado'}">Soldado</option>
+            <option value="vikingo" th:selected="${guerrero.tipo == 'vikingo'}">Vikingo</option>
+            <option value="alienigena" th:selected="${guerrero.tipo == 'alienigena'}">Alienígena</option>
+        </select><br /><br />
 
-    <label for="tipo">Tipo</label><br />
-    <select id="tipo" name="tipo" th:field="*{tipo}" required>
-        <option value="" disabled selected>Selecciona un tipo</option>
-        <option value="soldado" th:selected="${guerrero.tipo == 'soldado'}">Soldado</option>
-        <option value="vikingo" th:selected="${guerrero.tipo == 'vikingo'}">Vikingo</option>
-        <option value="alienigena" th:selected="${guerrero.tipo == 'alienigena'}">Alienígena</option>
-    </select><br /><br />
+        <label for="ataque">Ataque</label><br />
+        <input type="number" id="ataque" name="ataque" th:field="*{ataque}" required min="0" /><br /><br />
 
-    <label for="ataque">Ataque</label><br />
-    <input type="number" id="ataque" name="ataque" th:field="*{ataque}" required min="0" /><br /><br />
+        <label for="defensa">Defensa</label><br />
+        <input type="number" id="defensa" name="defensa" th:field="*{defensa}" required min="0" /><br /><br />
 
-    <label for="defensa">Defensa</label><br />
-    <input type="number" id="defensa" name="defensa" th:field="*{defensa}" required min="0" /><br /><br />
+        <!-- Vehículo: oculto si vehiculoId está, select si no -->
+        <div th:if="${vehiculoId != null}">
+            <input type="hidden" name="vehiculoId" th:value="${vehiculoId}" />
+            <p>Vehículo seleccionado: <span th:text="${vehiculo.nombre}">Nombre Vehículo</span></p>
+        </div>
 
-    <div style="text-align: center;">
-        <button type="submit">Guardar</button>
-        <button type="button" onclick="window.history.back();">Volver</button>
-    </div>
-</form>
+        <div th:if="${vehiculoId == null}">
+            <label for="vehiculoId">Selecciona Vehículo:</label><br />
+            <select id="vehiculoId" name="vehiculoId" required>
+    <option value="" disabled selected>Selecciona un vehículo</option>
+    <option th:each="vehiculo : ${vehiculos}" 
+            th:value="${vehiculo.id}" 
+            th:text="|${vehiculo.nombre} (${vehiculo.tipo})|">
+    </option>
+</select><br /><br />
+        </div>
+
+        <div style="text-align: center;">
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="window.history.back();">Volver</button>
+        </div>
+    </form>
 
 </body>
 </html>

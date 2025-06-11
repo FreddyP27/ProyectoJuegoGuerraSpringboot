@@ -1,5 +1,7 @@
 package es.proyectojuegoguerra.springboot.juegospringboot.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.proyectojuegoguerra.springboot.juegospringboot.entities.GuerreroEntity;
+import es.proyectojuegoguerra.springboot.juegospringboot.entities.VehiculoEntity;
+import es.proyectojuegoguerra.springboot.juegospringboot.repositories.VehiculoRepository;
 import es.proyectojuegoguerra.springboot.juegospringboot.services.UsuarioService;
 
 @Controller
@@ -15,6 +19,9 @@ public class LoginController {
 
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private VehiculoRepository vehiculoRepo;
 
     @GetMapping("/login")
     public String mostrarFormulario() {
@@ -44,9 +51,23 @@ public class LoginController {
         return "AnadirGuerrero";
     }*/
     @GetMapping("/anadirGuerrero")
-    public String guerreroNuevo(@RequestParam("vehiculoId") Long vehiculoId, Model model) {
-        model.addAttribute("vehiculoId", vehiculoId);
+    public String mostrarFormulario(
+        @RequestParam(name = "vehiculoId", required = false) Long vehiculoId,
+        Model model) {
+
         model.addAttribute("guerrero", new GuerreroEntity());
-        return "anadirGuerrero"; // nombre del html en minúscula y sin extensión
+
+        if (vehiculoId != null) {
+            model.addAttribute("vehiculoId", vehiculoId);
+            // Obtener el vehículo del repositorio
+            VehiculoEntity vehiculo = vehiculoRepo.findById(vehiculoId).orElse(null);
+            model.addAttribute("vehiculo", vehiculo); // <-- PASAMOS el vehículo
+
+        } else {
+            List<VehiculoEntity> vehiculos = vehiculoRepo.findAll();
+            model.addAttribute("vehiculos", vehiculos);
+        }
+
+        return "anadirGuerrero";
     }
 }
