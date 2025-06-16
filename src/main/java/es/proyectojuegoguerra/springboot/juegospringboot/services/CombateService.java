@@ -22,6 +22,7 @@ public class CombateService {
     public String combate(Long vehiculoId1, Long vehiculoId2) {
         // Validacion para que el vehiculo no se enfrente a si mismo
         if (vehiculoId1.equals(vehiculoId2)) {
+        	logger.warn("Intento de combate entre el mismo vehículo (ID: {}). Operación cancelada.", vehiculoId1);
             return "No se puede iniciar un combate entre el mismo vehículo.";
         }
 
