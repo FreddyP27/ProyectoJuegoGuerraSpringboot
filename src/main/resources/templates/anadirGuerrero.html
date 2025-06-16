@@ -12,6 +12,10 @@
         <button style="position: absolute; top: 10px; right: 10px;" onclick="window.location.href='/login'">
             <img src="/img/cerrar.png" alt="Cerrar Sesión" width="25" />
         </button>
+        
+        <div th:if="${error}" style="color: red; text-align: center; margin-bottom: 15px;">
+
+</div>
     </header>
 
     <div th:if="${error}" style="color: #ff5555; margin-bottom: 15px; text-align: center;">
@@ -62,6 +66,8 @@
             <button type="button" onclick="window.history.back();">Volver</button>
         </div>
     </form>
+
+
 
 </body>
 </html>
