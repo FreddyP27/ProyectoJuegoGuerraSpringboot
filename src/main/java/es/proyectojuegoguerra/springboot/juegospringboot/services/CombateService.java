@@ -16,23 +16,26 @@ public class CombateService {
     //private static final Logger logger = LoggerFactory.getLogger(CombateService.class);
 
     public String combate(Long vehiculoId1, Long vehiculoId2) {
-        //logger.info("Iniciando combate entre Vehículo {} y Vehículo {}", vehiculoId1, vehiculoId2);
+        // Validar que los vehículos no sean el mismo
+        if (vehiculoId1.equals(vehiculoId2)) {
+            return "No se puede iniciar un combate entre el mismo vehículo.";
+        }
 
         VehiculoEntity v1 = vehiculoRepository.findById(vehiculoId1)
                 .orElseThrow(() -> new RuntimeException("Vehículo 1 no encontrado"));
         VehiculoEntity v2 = vehiculoRepository.findById(vehiculoId2)
                 .orElseThrow(() -> new RuntimeException("Vehículo 2 no encontrado"));
 
-        // ✅ Validación: ambos vehículos deben tener al menos un guerrero
+        // Validación: ambos vehículos deben tener al menos un guerrero
         if (v1.getGuerreros() == null || v1.getGuerreros().isEmpty()) {
             //logger.warn("Vehículo 1 no tiene guerreros. Combate cancelado.");
-        	System.out.println("Vehículo 1 no tiene guerreros. Combate cancelado.");
+            System.out.println("Vehículo 1 no tiene guerreros. Combate cancelado.");
             return "El Vehículo 1 no tiene guerreros asignados. No se puede iniciar el combate.";
         }
 
         if (v2.getGuerreros() == null || v2.getGuerreros().isEmpty()) {
             //logger.warn("Vehículo 2 no tiene guerreros. Combate cancelado.");
-        	System.out.println("Vehículo 2 no tiene guerreros. Combate cancelado.");
+            System.out.println("Vehículo 2 no tiene guerreros. Combate cancelado.");
             return "El Vehículo 2 no tiene guerreros asignados. No se puede iniciar el combate.";
         }
 
