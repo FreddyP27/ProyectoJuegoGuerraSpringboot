@@ -14,9 +14,10 @@ public class CombateService {
     private VehiculoRepository vehiculoRepository;
 
     //private static final Logger logger = LoggerFactory.getLogger(CombateService.class);
+   
 
     public String combate(Long vehiculoId1, Long vehiculoId2) {
-        // Validar que los vehículos no sean el mismo
+        // Validacion para que el vehiculo no se enfrente a si mismo
         if (vehiculoId1.equals(vehiculoId2)) {
             return "No se puede iniciar un combate entre el mismo vehículo.";
         }
