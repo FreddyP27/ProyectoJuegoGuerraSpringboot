@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<div th:if="${error}" style="color: red; font-weight: bold;">
+    <p th:text="${error}"></p>
+</div>
+
 <form id="naveForm" method="post" action="/anadirVehiculo">
     <h2>Registrar Nave Espacial</h2><br>
 

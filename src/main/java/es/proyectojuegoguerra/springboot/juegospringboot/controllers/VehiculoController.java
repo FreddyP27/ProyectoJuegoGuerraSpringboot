@@ -69,10 +69,37 @@ public class VehiculoController {
     // Guardar vehículo desde formulario
     @PostMapping("/anadirVehiculo")
     public String guardarVehiculo(@RequestParam String nombre,
-                                   @RequestParam String tipo,
-                                   @RequestParam int vida,
-                                   @RequestParam int ataque,
-                                   @RequestParam int defensa) {
+                                 @RequestParam String tipo,
+                                 @RequestParam int vida,
+                                 @RequestParam int ataque,
+                                 @RequestParam int defensa,
+                                 Model model) {
+
+        // Validaciones
+        if (nombre == null || nombre.trim().isEmpty()) {
+            model.addAttribute("error", "El nombre es obligatorio.");
+            return "AnadirVehiculo";
+        }
+        
+        if (vida < 0) {
+            model.addAttribute("error", "La vida no puede ser negativa.");
+            return "AnadirVehiculo";
+        }
+
+        if (ataque < 1 || ataque > 10) {
+            model.addAttribute("error", "El ataque debe ser entre 1 y 10.");
+            return "AnadirVehiculo";
+        }
+
+        if (defensa < 1 || defensa > 10) {
+            model.addAttribute("error", "La defensa debe ser entre 1 y 10.");
+            return "AnadirVehiculo";
+        }
+
+        if (ataque + defensa > 10) {
+            model.addAttribute("error", "La suma de ataque y defensa no puede ser mayor a 10.");
+            return "AnadirVehiculo";
+        }
 
         VehiculoEntity nuevo = new VehiculoEntity(nombre, tipo, vida, ataque, defensa);
         vehiculoRepo.save(nuevo);

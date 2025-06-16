@@ -62,11 +62,30 @@ public class GuerreroController {
             return "redirect:/listadoVehiculo";
         }
 
+        // Validar ataque y defensa
+        int ataque = guerrero.getAtaque();
+        int defensa = guerrero.getDefensa();
+
+        if (ataque < 1 || ataque > 10) {
+            redirectAttributes.addFlashAttribute("error", "El ataque debe estar entre 1 y 10.");
+            return "redirect:/anadirGuerrero";
+        }
+
+        if (defensa < 1 || defensa > 10) {
+            redirectAttributes.addFlashAttribute("error", "La defensa debe estar entre 1 y 10.");
+            return "redirect:/anadirGuerrero";
+        }
+
+        if (ataque + defensa > 10) {
+            redirectAttributes.addFlashAttribute("error", "La suma de ataque y defensa no puede ser mayor a 10.");
+            return "redirect:/anadirGuerrero";
+        }
+
         // Validar compatibilidad guerrero-vehículo
         if (!esCompatible(guerrero.getTipo(), vehiculo.getTipo())) {
             redirectAttributes.addFlashAttribute("error",
                 "El guerrero de tipo '" + guerrero.getTipo() + "' no puede embarcar en vehículo tipo '" + vehiculo.getTipo() + "'");
-            return "redirect:/listadoVehiculo";
+            return "redirect:/anadirGuerrero";
         }
 
         guerrero.setVehiculo(vehiculo);
@@ -75,7 +94,6 @@ public class GuerreroController {
         redirectAttributes.addFlashAttribute("success", "Guerrero guardado correctamente");
         return "redirect:/listadoVehiculo";
     }
-
     // Aquí va el método privado justo dentro de la clase
     private boolean esCompatible(String tipoGuerrero, String tipoVehiculo) {
         tipoGuerrero = tipoGuerrero.toLowerCase();
