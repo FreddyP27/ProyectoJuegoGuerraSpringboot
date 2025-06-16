@@ -8,8 +8,6 @@
 </head>
 <body>
 
-
-
 <form id="naveForm" method="post" action="/anadirVehiculo">
     <h2>Registrar Nave Espacial</h2><br>
 
@@ -22,7 +20,8 @@
         <option value="Alienigena">Nave Alienigena</option>
         <option value="Vikingo">Vikingo</option>
     </select><br>
-        <label>VidaTipo:</label>
+
+    <label>VidaTipo:</label>
     <input type="text" id="vida" name="vida" value="1000" readonly><br>
 
     <label>Ataque:</label>
@@ -32,6 +31,10 @@
     <input type="number" id="defensa" name="defensa" value="0"><br>
 
     <button type="submit">Guardar</button>
+    <!-- Botón Volver -->
+	<div style="text-align: center; margin-top: 20px;">
+	     <button type="button" onclick="window.history.back();">Volver</button>
+	</div>
 </form>
 
 

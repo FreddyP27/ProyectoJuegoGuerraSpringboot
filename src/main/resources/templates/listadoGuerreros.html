@@ -14,6 +14,7 @@
             <img src="/img/cerrar.png" alt="Cerrar Sesión" width="25" />
         </button>
     </header>
+
     <!-- Formulario de filtro -->
     <form method="get" action="/listadoGuerrero" class="filter-section" style="text-align:center; margin-bottom:20px;">
         <label for="tipo">Tipo:</label>
@@ -47,8 +48,9 @@
     </table>
 
     <div class="add-button-container" style="text-align: center; margin-top: 20px;">
-        <!--  <button onclick="window.location.href='/anadirGuerrero'">Añadir Nuevo Guerrero</button>-->
-<button onclick="window.location.href='/anadirGuerrero'">Añadir Guerrero</button>
+        <button onclick="window.location.href='/anadirGuerrero'">Añadir Guerrero</button>
+        <br /><br />
+        <button type="button" onclick="window.history.back();">Volver</button>
     </div>
 
 </body>

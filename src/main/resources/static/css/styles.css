@@ -59,6 +59,27 @@
             margin-top: 15px;
         }
 
+.boton-anadir {
+    background-color: #0ff;
+    color: black;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0px 0px 12px #0ff;
+    margin: 20px auto;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+}
+
+.boton-anadir:hover {
+    background-color: #08f;
+    box-shadow: 0px 0px 20px #08f;
+    transform: scale(1.05);
+}
+
         button:hover {
             background-color: #08f;
             box-shadow: 0px 0px 20px #08f;

@@ -57,38 +57,39 @@
     </table>
 
     <br>
-    
-    <!-- ==================================================================0 -->
-    <form method="get" action="/combate" class="form-combate">
-	    <label for="vehiculo1Id">Vehículo 1:</label>
-	    <select name="vehiculo1Id" id="vehiculo1Id" required>
-	        <option value="" disabled selected>Selecciona Vehículo 1</option>
-	        <option th:each="vehiculo : ${vehiculos}" 
-	                th:value="${vehiculo.id}" 
-	                th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
-	        </option>
-	    </select>
-	
-	    <label for="vehiculo2Id" style="margin-left: 20px;">Vehículo 2:</label>
-	    <select name="vehiculo2Id" id="vehiculo2Id" required>
-	        <option value="" disabled selected>Selecciona Vehículo 2</option>
-	        <option th:each="vehiculo : ${vehiculos}" 
-	                th:value="${vehiculo.id}" 
-	                th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
-	        </option>
-	    </select>
-	
-	    <button type="submit" style="margin-left: 20px;">Iniciar Combate</button>
-	</form>
-     <!-- ==================================================================0 -->
 
-    <div class="buttons-container">
-        <input type="button" onclick="window.location.href='AnadirVehiculo'" value="Añadir Vehiculo" />
-        <!--  <input type="button" value="Iniciar Combate" /> -->
+    <!-- Formulario de combate -->
+    <form method="get" action="/combate" class="form-combate">
+        <label for="vehiculo1Id">Vehículo 1:</label>
+        <select name="vehiculo1Id" id="vehiculo1Id" required>
+            <option value="" disabled selected>Selecciona Vehículo 1</option>
+            <option th:each="vehiculo : ${vehiculos}" 
+                    th:value="${vehiculo.id}" 
+                    th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
+            </option>
+        </select>
+
+        <label for="vehiculo2Id" style="margin-left: 20px;">Vehículo 2:</label>
+        <select name="vehiculo2Id" id="vehiculo2Id" required>
+            <option value="" disabled selected>Selecciona Vehículo 2</option>
+            <option th:each="vehiculo : ${vehiculos}" 
+                    th:value="${vehiculo.id}" 
+                    th:text="${vehiculo.nombre} + ' (' + vehiculo.tipo + ')'">
+            </option>
+        </select>
+
+        <button type="submit" style="margin-left: 20px;">Iniciar Combate</button>
+    </form>
+
+    <!-- Botón Añadir Vehiculo -->
+    <div class="buttons-container" style="margin-top: 30px;">
+        <button onclick="window.location.href='AnadirVehiculo'">Añadir Vehiculo</button>
     </div>
+
+    <!-- Resultado del combate -->
     <div class="resultado-combate" th:if="${resultadoCombate != null}">
-	    <strong>Resultado del combate:</strong> <span th:text="${resultadoCombate}"></span>
-	</div>
+        <strong>Resultado del combate:</strong> <span th:text="${resultadoCombate}"></span>
+    </div>
 
 </body>
 </html>
