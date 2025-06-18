@@ -39,7 +39,9 @@
                         <img alt="Eliminar" src="/images/delete.png" width="30" height="30" />
                     </a>
                 </td>
-                <td th:text="${vehiculo.nombre}">Nombre</td>
+                <td>
+                	<a th:href="@{'/vehiculo/' + ${vehiculo.id}}" th:text="${vehiculo.nombre}">Nombre</a>
+                </td>
                 <td th:text="${vehiculo.tipo}">Tipo</td>
                 <td th:text="${vehiculo.vida}">Vida</td>
                 <td th:text="${vehiculo.ataque}">Ataque</td>

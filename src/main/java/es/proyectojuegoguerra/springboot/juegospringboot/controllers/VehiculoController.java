@@ -127,4 +127,21 @@ public class VehiculoController {
         vehiculoRepo.save(vehiculo);
         return "redirect:/listadoVehiculo";
     }
+    
+    @GetMapping("/vehiculo/{id}")
+    public String verDetalleVehiculo(@PathVariable Long id, Model model) {
+        VehiculoEntity vehiculo = vehiculoRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+        model.addAttribute("vehiculo", vehiculo);
+        return "vehiculoDetalle";
+    }
+
+    @PostMapping("/vehiculo/restaurar/{id}")
+    public String restaurarVidaVehiculo(@PathVariable Long id) {
+        VehiculoEntity vehiculo = vehiculoRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+        vehiculo.setVida(1000);
+        vehiculoRepo.save(vehiculo);
+        return "redirect:/vehiculo/" + id;
+    }
 }

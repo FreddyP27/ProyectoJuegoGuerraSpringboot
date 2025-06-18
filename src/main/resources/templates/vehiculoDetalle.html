@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detalle del Vehículo</title>
+    <link rel="stylesheet" href="/css/stylesVD.css" />
+</head>
+<body>
+
+    <h1 th:text="'Vehículo: ' + ${vehiculo.nombre} + ' (' + ${vehiculo.tipo} + ')'"></h1>
+    <p th:text="'Vida: ' + ${vehiculo.vida} + ' | Ataque: ' + ${vehiculo.ataque} + ' | Defensa: ' + ${vehiculo.defensa}"></p>
+
+    <form th:action="@{'/vehiculo/restaurar/' + ${vehiculo.id}}" method="post">
+        <button type="submit">Restaurar Vida a 1000</button>
+    </form>
+
+    <h2>Guerreros Asignados</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Ataque</th>
+                <th>Defensa</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="guerrero : ${vehiculo.guerreros}">
+                <td th:text="${guerrero.nombre}"></td>
+                <td th:text="${guerrero.tipo}"></td>
+                <td th:text="${guerrero.ataque}"></td>
+                <td th:text="${guerrero.defensa}"></td>
+                <td>
+                    <a th:href="@{'/guerrero/eliminar/' + ${guerrero.id} + '?vehiculoId=' + ${vehiculo.id}}"
+                       onclick="return confirm('¿Seguro que deseas eliminar este guerrero?')">
+                        <img src="/images/delete.png" width="25" height="25" alt="Eliminar" />
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{'/anadirGuerrero?vehiculoId=' + ${vehiculo.id}}">
+        <button>Añadir Guerrero</button>
+    </a>
+
+    <br><br>
+    <br><br>
+	<a href="/listadoVehiculo" class="volver-enlace">← Volver al listado</a>
+
+</body>
+</html>
